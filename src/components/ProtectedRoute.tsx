@@ -3,6 +3,7 @@ import { useAuth } from "@/hooks/useAuth";
 
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
+  const token = localStorage.getItem("token");
 
   if (loading) {
     return (
@@ -12,7 +13,7 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
     );
   }
 
-  if (!user) {
+  if (!user && !token) {
     return <Navigate to="/login" replace />;
   }
 

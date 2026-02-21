@@ -7,6 +7,9 @@ import {
   LogOut,
   Footprints,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 import { NavLink } from "@/components/NavLink";
 import {
   Sidebar,
@@ -33,6 +36,17 @@ const bottomNav = [
 ];
 
 export function AdminSidebar() {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    localStorage.removeItem("token");
+    localStorage.removeItem("admin");
+    navigate("/login");
+    toast({ title: "Logged out", description: "You have been successfully logged out." });
+  };
+  
+
   return (
     <Sidebar className="border-r border-sidebar-border">
       <SidebarHeader className="p-5">
@@ -42,7 +56,7 @@ export function AdminSidebar() {
           </div>
           <div>
             <h1 className="font-display text-lg font-bold text-sidebar-accent-foreground">
-              SoleAdmin
+            EKA Admin
             </h1>
             <p className="text-xs text-sidebar-muted">Shoe Management</p>
           </div>
@@ -93,9 +107,12 @@ export function AdminSidebar() {
             </SidebarMenuItem>
           ))}
           <SidebarMenuItem>
-            <SidebarMenuButton className="flex items-center gap-3 px-5 py-2.5 text-sidebar-foreground rounded-lg transition-colors hover:bg-destructive/10 hover:text-destructive cursor-pointer">
+            <SidebarMenuButton
+              onClick={handleLogout}
+              className="flex items-center gap-3 px-5 py-2.5 text-sidebar-foreground rounded-lg transition-colors hover:bg-destructive/10 hover:text-destructive cursor-pointer"
+            >
               <LogOut className="h-5 w-5" />
-              <span>Log Out</span>
+              <span>Log Out </span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
