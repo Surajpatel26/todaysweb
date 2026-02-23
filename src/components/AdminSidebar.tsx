@@ -6,6 +6,7 @@ import {
   Settings,
   LogOut,
   Footprints,
+  UserCog,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -29,6 +30,7 @@ const mainNav = [
   { title: "Products", url: "/products", icon: Package },
   { title: "Orders", url: "/orders", icon: ShoppingCart },
   { title: "Customers", url: "/customers", icon: Users },
+  { title: "User Management", url: "/users", icon: UserCog },
 ];
 
 const bottomNav = [
